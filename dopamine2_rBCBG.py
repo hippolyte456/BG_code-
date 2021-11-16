@@ -24,7 +24,7 @@ model = models_param[modelID]
 
 
 ##################### DEFINITION / RECUPERATION PARAMETRES NECESSAIRES ... A PASSER AUX CLASSES d'ANNarchy #################### 
-def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSNr = 5 , Dt = 1, time = 1000.0, NbChannels = 3, perturb = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], projection_test = False, channel_test = False, Shapley_test = False, test_verif_model = False, test_hysteresis = False, test_variation_tau = False):
+def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSNr = 5 , Dt = 1, time = 1000.0, NbChannels = 3, perturb = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], projection_test = False, channel_test = False, Shapley_test = False, utilisation_inputer = False, test_hysteresis = False, test_variation_tau = False):
 
     #### paramétrage ####
 
@@ -330,15 +330,16 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
         
 
 
-    if test_verif_model :
+    if utilisation_inputer :
         #mettre les différents inputs possibles dans des fonctions  
         all_time = time 
+        nb_stim = 1
         simulate(all_time)
           
 
     else:
         #mettre les différents inputs possibles dans des fonctions 
-        nb_saliences = 10
+        nb_saliences = 5
         CSN_levels = [2 + (salience * (20-2))/(nb_saliences-1) for salience in range(nb_saliences)]
         PTN_levels = [15 + (salience * (46-15))/(nb_saliences-1) for salience in range(nb_saliences)]
         n = len(CSN_levels) #on pourrait prendre directement nb_saliences
@@ -477,7 +478,7 @@ def channels_test():
 
       
 def verif_model():
-    creation_model(test_verif_model= True)
+    creation_model(utilisation_inputer= True)
 
 #def test_hysteresis():   
 
@@ -508,7 +509,7 @@ def create_seq_stimuli(stimuli):
 
 
 if __name__ == '__main__':
-    creation_model(test_verif_model= True)
+    creation_model(utilisation_inputer = False)
     #val_proj_eff, val_proj_dist = Shapley_test()
     #np.save('log/test_Shapley/results_eff', val_proj_eff)
     #np.save('log/test_Shapley/results_dist', val_proj_dist)
