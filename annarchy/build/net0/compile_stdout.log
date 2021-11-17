@@ -1,0 +1,8 @@
+/usr/bin/cython3 -3 --cplus -I /usr/local/lib/python3.6/dist-packages/ANNarchy/core/cython_ext/ -I /usr/local/lib/python3.6/dist-packages/ -D ANNarchyCore0.pyx 
+g++ -march=native -O2 -D_DISABLE_PARALLEL_RNG  -shared -fPIC -fpermissive -std=c++14 -fopenmp \
+        *.cpp   -o ANNarchyCore0.so \
+        `/usr/bin/python3.6-config --includes` -I/usr/local/lib/python3.6/dist-packages/numpy/core/include -I/usr/local/lib/python3.6/dist-packages/ANNarchy/include \
+        -I /usr/local/lib/python3.6/dist-packages/ANNarchy/core/cython_ext/ -I /usr/local/lib/python3.6/dist-packages/ \
+        -lpython3.6m \
+        -L/usr/lib 
+mv ANNarchyCore0.so ../..

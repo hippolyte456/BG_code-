@@ -15,7 +15,7 @@ from itertools import chain, combinations
 ############################################     CHOIX DE LA MODELISATION         ############################################
 
 os.getcwd()
-os.chdir('/home/hippo/Documents/FoldersBG')
+os.chdir('/home/hippolyte.dreyfus/Documents/FoldersBG')
 
 modelID = 9
 models_param = loadtxt(open("compact_weights.csv","rb"),delimiter=";",skiprows=1)
@@ -95,6 +95,13 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
     # stimuli_PTN1 = [[15,1000,0,50]] #[8,1000,0,50],[3,1000,0,50],[3,500,0,50]]
     # stimuli_PTN2 = [[30,1000,0,50]] #[8,1000,0,50],[3,1000,0,50],[3,500,0,50]]
     # stimuli_CmPf = [[4,1000,0,50]] #[8,1000,0,20],[3,1000,0,50],[3,500,0,50]] 
+
+    #stimuli comme pour test de Shapley, avec rampe 
+    # stimuli_CSN1 = [[2,time*5,0,30],[5,time*4,time*5,30],[10,time*3,time*9,30],[15,time*2,time*12,20],[20,time*1,time*14,30]]
+    # stimuli_CSN2 = [[2,time*1,0,30],[5,time*1,time,30],[10,time*1,time*2,30],[15,time*1,time*3,20],[20,time*1,time*4,30],    [5,time*1,time*5,30],[10,time*1,time*6,30],[15,time*1,time*7,20],[20,time*1,time*8,30],    [10,time*1,time*9,30],[15,time*1,time*10,20],[20,time*1,time*11,30],    [15,time*1,time*12,20],[20,time*1,time*13,30],    [20,time*1,time*14,30]  ]
+    # stimuli_PTN1= [[15,time*5,0,30],[23,time*4,time*5,30],[30,time*3,time*9,30],[38,time*2,time*12,20],[45,time*1,time*14,30]]
+    # stimuli_PTN2= [[15,time*1,0,30],[23,time*1,time*1,30],[30,time*1,time*2,30],[38,time*1,time*3,20],[45,time*1,time*4,30],     [23,time*1,time*5,30],[30,time*1,time*6,30],[38,time*1,time*7,20],[45,time*1,time*8,30],    [30,time*1,time*9,30],[38,time*1,time*10,20],[45,time*1,time*11,30],     [38,time*1,time*12,20],[45,time*1,time*13,30],     [45,time*1,time*14,30]]
+    # stimuli_CmPf = [[4,time*15,0,30]]
     
     #definir une classe pour l'ensemble des stimuli et definir des fonctions pour faciliter le changement des valeurs nuémriques et du nombre de stimuli
     #def set_intensite()
@@ -107,11 +114,11 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
 
 
     # un stimulus est défini par son intensite puis sa duree puis son Temps initial puis le laps de temps qu'il faut pour arriver son maximum 
-    stimuli_CSN1 = [[5,400,200,50],[8,200,600,20],[3,800,100,20],[3,500,250,20]]
-    stimuli_CSN2 = [[10,400,200,50],[16,200,600,20],[6,800,100,20],[6,500,250,20]]
-    stimuli_PTN1= [[20,400,200,50],[25,200,600,20],[15,800,100,20],[15,500,250,20]]
-    stimuli_PTN2= [[30,400,200,50],[35,200,600,20],[25,800,100,20],[25,500,250,20]]
-    stimuli_CmPf = [[5,400,200,50],[8,200,600,20],[3,800,100,20],[3,500,250,20]]
+    stimuli_CSN1 = [[2,time*5,0,30],[5,time*4,time*5,30],[10,time*3,time*9,30],[15,time*2,time*12,20],[20,time*1,time*14,30]]
+    stimuli_CSN2 = [[2,time*1,0,30],[5,time*1,time,30],[10,time*1,time*2,30],[15,time*1,time*3,20],[20,time*1,time*4,30],    [5,time*1,time*5,30],[10,time*1,time*6,30],[15,time*1,time*7,20],[20,time*1,time*8,30],    [10,time*1,time*9,30],[15,time*1,time*10,20],[20,time*1,time*11,30],    [15,time*1,time*12,20],[20,time*1,time*13,30],    [20,time*1,time*14,30]  ]
+    stimuli_PTN1= [[15,time*5,0,30],[23,time*4,time*5,30],[30,time*3,time*9,30],[38,time*2,time*12,20],[45,time*1,time*14,30]]
+    stimuli_PTN2= [[15,time*1,0,30],[23,time*1,time*1,30],[30,time*1,time*2,30],[38,time*1,time*3,20],[45,time*1,time*4,30],     [23,time*1,time*5,30],[30,time*1,time*6,30],[38,time*1,time*7,20],[45,time*1,time*8,30],    [30,time*1,time*9,30],[38,time*1,time*10,20],[45,time*1,time*11,30],     [38,time*1,time*12,20],[45,time*1,time*13,30],     [45,time*1,time*14,30]]
+    stimuli_CmPf = [[4,time*15,0,30]]
     stringified_stimuli_CSN1 = create_seq_stimuli(stimuli_CSN1)
     stringified_stimuli_CSN2 = create_seq_stimuli(stimuli_CSN2)
     stringified_stimuli_PTN1 = create_seq_stimuli(stimuli_PTN1)
@@ -326,14 +333,21 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
             GPemonitors[channel] = Monitor(GPe[idx], 'r')
             GPiSNrmonitors[channel] = Monitor(GPiSNr[idx], 'r')
 
+    
+    mCSN = Monitor(CSN, 'r')
+    mCSNstim = Monitor(CSNstim, 'r')
+    mPTN = Monitor(PTN, 'r')
+    mPTNstim = Monitor(PTNstim, 'r')
+    mCmPf = Monitor(CmPf, 'r')
+    
     # #### configuration ds inputs  et simulation ####
         
 
 
     if utilisation_inputer :
         #mettre les différents inputs possibles dans des fonctions  
-        all_time = time 
-        nb_stim = 1
+        nb_stim = 15
+        all_time = time * nb_stim
         simulate(all_time)
           
 
@@ -367,23 +381,24 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
     #   r = GPiSNrmonitors[0].get('r')
     #   return( mean(r))
 
-    
-    
-    # #### traitement des données simulées et affichage ####
+    ##### traitement des données simulées et affichage ####
+    # rCSN = mCSN.get('r')
+    # rCSNstim = mCSNstim.get('r')
+    # rPTN = mPTN.get('r')
+    # rPTNstim = mPTNstim.get('r')
+    # rCmPf = mCmPf.get('r')
+    # f,axs = plt.subplots(nrows=3 , ncols= 2 , sharey='row')
+    # axs[0,0].plot(dt()*np.arange(all_time*(1/Dt)), rCSN)
+    # axs[0,1].plot(dt()*np.arange(all_time*(1/Dt)), rCSNstim)
+    # axs[1,0].plot(dt()*np.arange(all_time*(1/Dt)), rPTN) 
+    # axs[1,1].plot(dt()*np.arange(all_time*(1/Dt)), rPTNstim)
+    # axs[2,0].plot(dt()*np.arange(all_time*(1/Dt)), rCmPf)
+    # axs[2,1].plot(dt()*np.arange(all_time*(1/Dt)), rCmPf)
+    # plt.show()
+
 
     rGPi = view_all_firing_rate(NbChannels, MSNmonitors, STNmonitors,FSImonitors,GPemonitors,GPiSNrmonitors, all_time, projection_test = projection_test, Shapley_test= Shapley_test, Dt = Dt, test_variation_tau = test_variation_tau, Tau_MSN = Tau_MSN, Tau_FSI = Tau_FSI, Tau_STN = Tau_STN, Tau_GPe = Tau_GPe, Tau_GPiSNr = Tau_GPiSNr )
-    eff , dist, list_eff, list_dist = calcul_eff_dist(rGPi[0], rGPi[1],nb_stim)
-    if not (projection_test or Shapley_test) :
-        view_matrix_eff_dist(list_eff,list_dist,n, NbChannels)
-
-    if channel_test:
-        np.save('log/channels_test/eff_dist_%d_channels'%NbChannels, [eff,dist])
-    if projection_test:
-        np.save('log/test_all_proj/eff_dist_' +str(perturb), [eff,dist])
-
-   
-    return(eff,dist)
-
+    
     
 
     ####################################### VISUALISATIONS DU MODELE ##########################################################
@@ -412,73 +427,35 @@ def view_all_firing_rate( NbChannels, MSNmonitors, STNmonitors,FSImonitors,GPemo
         if idx <= 1: #on récupere le firing rate du GPi pour les deux premiers canaux : le premier étant celui stimuler et l'autre pour la comparaison
             rGPi.append(r)
     
-    if test_variation_tau: 
-        plt.savefig('log/test_variation_tau/tau' + str(Tau_MSN) +','+ str(Tau_FSI) +','+ str(Tau_GPe) +','+ str(Tau_STN) +','+ str(Tau_GPiSNr) + '.pdf', dpi=300, bbox_inches='tight')
-        plt.close()
-    if projection_test or Shapley_test or test_variation_tau :
-        pass
-    else: 
-        plt.show()
-        plt.close()
+    #plt.savefig('log/test_variation_tau/tau' + str(Tau_MSN) +','+ str(Tau_FSI) +','+ str(Tau_GPe) +','+ str(Tau_STN) +','+ str(Tau_GPiSNr) + '.pdf', dpi=300, bbox_inches='tight')
+    #plt.savefig('log/comprendre_oscillations/test_tau/tauSTN=' + str(Tau_STN) + '.png', dpi=300, bbox_inches='tight')
+    plt.show()
+    #plt.close('all')
     return(rGPi)
 
 
-def calcul_eff_dist(firing_rate,firing_rate_stim,nb_stim):
-    subarrays, subarrays_stim = {} , {}
-    for i in range(nb_stim): 
-        subarrays['%d'%i] = firing_rate[int('%d250'%i) : int('%d750'%i)]         
-        subarrays_stim['%d'%i] = firing_rate_stim[int('%d250'%i) : int('%d750'%i)]
-
-    rGPi_rest = mean(subarrays['1'])
-    efficacity, distortion = [],[]
-    for i in range(nb_stim):
-        rGPi = mean(subarrays['%d'%i])
-        rGPi_stim = mean(subarrays_stim['%d'%i])
-        eff1 = max(0, 1 - rGPi / rGPi_rest)
-        eff2 = max(0, 1 - rGPi_stim / rGPi_rest)
-        eff = max( eff1, eff2)
-        dist = 1 - abs( eff1 - eff2 ) / (eff+0.00000001) #changer pour la la mettre à 0 quand pas d'efficacité du tout 
-        efficacity.append(eff)
-        distortion.append(dist)
-    
-    value_efficacity = mean(efficacity)
-    value_distortion = mean(distortion)
-    #tot_selection_value = mean(np.array(1-value_distortion,value_efficacity))   #à normaliser
-    return (value_efficacity,value_distortion,efficacity,distortion)
 
 
-def view_matrix_eff_dist(list_eff,list_dist, n, NbChannels):
-    
-    matrix_eff = np.matrix( [ [ 0 for k in range(j) ]  +  [list_eff[ int(sum([((n) - k) for k in range(j)]) ) + l ] for l in range(n - j) ]   for j in range(n) ] )
-    matrix_dist = np.matrix( [ [ 0 for k in range(j) ]  +  [list_dist[ int(sum([((n) - k) for k in range(j)]) ) + l ] for l in range(n - j) ]   for j in range(n) ] )
-    #matrix_eff = np.matrix([[list_eff[i] for i in range(5)],[list_eff[5 + i] for i in range(4)] + [0] , [list_eff[5+4 + i] for i in range(3)] + [0,0], [list_eff[5+4+3 + i] for i in range(2)] + [0,0,0], [list_eff[5+4+3+2 + i] for i in range(1)] + [0,0,0,0]])
-    #matrix_dist = np.matrix([[list_dist[i] for i in range(5)],[list_dist[5 + i] for i in range(4)] + [0] , [list_dist[5+4 + i] for i in range(3)] + [0,0], [list_dist[5+4+3 + i] for i in range(2)] + [0,0,0], [list_dist[5+4+3+2 + i] for i in range(1)] + [0,0,0,0]])
-    plt.subplot(121)
-    plt.imshow(matrix_eff)
-    plt.subplot(122)
-    plt.imshow(matrix_dist)
-    #plt.show()
-
-    plt.imsave(fname = "log/channels_test/matrice_eff%d" %NbChannels, arr = matrix_eff, format = 'png' )
-    plt.imsave(fname = "log/channels_test/matrice_dist%d" %NbChannels, arr = matrix_dist, format = 'png' )
-    plt.close()
+##################################  Fonctions pour creer les inputs  #####################################
+def create_seq_stimuli(stimuli):
+        stringified_stimuli = ""
+        for stimulus in stimuli :
+            stringified_stimulus = "g(t-" + str(stimulus[2]) + "," + str(stimulus[0]) +","+ str(stimulus[3]) + ",t-" + str(stimulus[1]) + "-" + str(stimulus[2]) + "+" + str(stimulus[3]) + ")"
+            stringified_stimuli = stringified_stimuli + "+" + stringified_stimulus
+        return stringified_stimuli
 
 
-def test_all_projections():
-    perturbation = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1] 
-    for projection in range(len(perturbation)):
-        perturbation[projection] = 0 
-        creation_model(perturb = perturbation, projection_test = True)
-        perturbation[projection] = 1       
 
+
+##################################     Test preliminaires       ############################################## 
+
+
+#channels_test()
+#test_all_projections()
 
 def channels_test():
     for i in range(2,10):
         eff, dist = creation_model(NbChannels = i)
-
-      
-def verif_model():
-    creation_model(utilisation_inputer= True)
 
 #def test_hysteresis():   
 
@@ -490,26 +467,14 @@ def test_variation_tau():
                     for m in [5,30]:
                         creation_model(Tau_MSN = i, Tau_FSI = j, Tau_GPe = k, Tau_STN = l, Tau_GPiSNr= m, test_variation_tau = True)
 
-
-def create_seq_stimuli(stimuli):
-        stringified_stimuli = ""
-        for stimulus in stimuli :
-            stringified_stimulus = "g(t-" + str(stimulus[2]) + "," + str(stimulus[0]) +","+ str(stimulus[3]) + ",t-" + str(stimulus[1]) + "-" + str(stimulus[2]) + "+" + str(stimulus[3]) + ")"
-            stringified_stimuli = stringified_stimuli + "+" + stringified_stimulus
-        return stringified_stimuli
-
-##################################     Test preliminaires       ############################################## 
-
-
-#channels_test()
-#test_all_projections()
-
 ##############################################################################################################
 
 
 
 if __name__ == '__main__':
-    creation_model(utilisation_inputer = False)
+    for i in [5,10,20,30,50]:
+        creation_model(utilisation_inputer = True, NbChannels = 3,Tau_MSN = 5, Tau_FSI = 5, Tau_STN = i, Tau_GPe = 5, Tau_GPiSNr = 5 )
+
     #val_proj_eff, val_proj_dist = Shapley_test()
     #np.save('log/test_Shapley/results_eff', val_proj_eff)
     #np.save('log/test_Shapley/results_dist', val_proj_dist)
