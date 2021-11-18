@@ -113,53 +113,7 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
     #########################################################################################################################################
 
 
-    # un stimulus est défini par son intensite puis sa duree puis son Temps initial puis le laps de temps qu'il faut pour arriver son maximum 
-    stimuli_CSN1 = [[2,time*5,0,30],[5,time*4,time*5,30],[10,time*3,time*9,30],[15,time*2,time*12,20],[20,time*1,time*14,30]]
-    stimuli_CSN2 = [[2,time*1,0,30],[5,time*1,time,30],[10,time*1,time*2,30],[15,time*1,time*3,20],[20,time*1,time*4,30],    [5,time*1,time*5,30],[10,time*1,time*6,30],[15,time*1,time*7,20],[20,time*1,time*8,30],    [10,time*1,time*9,30],[15,time*1,time*10,20],[20,time*1,time*11,30],    [15,time*1,time*12,20],[20,time*1,time*13,30],    [20,time*1,time*14,30]  ]
-    stimuli_PTN1= [[15,time*5,0,30],[23,time*4,time*5,30],[30,time*3,time*9,30],[38,time*2,time*12,20],[45,time*1,time*14,30]]
-    stimuli_PTN2= [[15,time*1,0,30],[23,time*1,time*1,30],[30,time*1,time*2,30],[38,time*1,time*3,20],[45,time*1,time*4,30],     [23,time*1,time*5,30],[30,time*1,time*6,30],[38,time*1,time*7,20],[45,time*1,time*8,30],    [30,time*1,time*9,30],[38,time*1,time*10,20],[45,time*1,time*11,30],     [38,time*1,time*12,20],[45,time*1,time*13,30],     [45,time*1,time*14,30]]
-    stimuli_CmPf = [[4,time*15,0,30]]
-    stringified_stimuli_CSN1 = create_seq_stimuli(stimuli_CSN1)
-    stringified_stimuli_CSN2 = create_seq_stimuli(stimuli_CSN2)
-    stringified_stimuli_PTN1 = create_seq_stimuli(stimuli_PTN1)
-    stringified_stimuli_PTN2 = create_seq_stimuli(stimuli_PTN2)
-    stringified_stimuli_CmPf = create_seq_stimuli(stimuli_CmPf)
-
-    input_CSN = Neuron(
-            equations = """ r = """ + stringified_stimuli_CSN1 ,
-            functions = """ 
-                g(a,b,c,d) = ((b/c)*a + abs(b/c*a)) / 2  - (b/c*(a-c) + abs( b/c*(a-c) )) / 2 - ( ((b/c)*d + abs(b/c*d)) / 2  - (b/c*(d-c) + abs( b/c*(d-c) )) / 2 )
-            """
-        )
-    
-    input_CSNstim = Neuron(
-            equations = """ r = """ + stringified_stimuli_CSN2 ,
-            functions = """ 
-                g(a,b,c,d) = ((b/c)*a + abs(b/c*a)) / 2  - (b/c*(a-c) + abs( b/c*(a-c) )) / 2 - ( ((b/c)*d + abs(b/c*d)) / 2  - (b/c*(d-c) + abs( b/c*(d-c) )) / 2 )
-            """
-        )
-    
-    input_PTN = Neuron(
-            equations = """ r = """ + stringified_stimuli_PTN1 ,
-            functions = """ 
-                g(a,b,c,d) = ((b/c)*a + abs(b/c*a)) / 2  - (b/c*(a-c) + abs( b/c*(a-c) )) / 2 - ( ((b/c)*d + abs(b/c*d)) / 2  - (b/c*(d-c) + abs( b/c*(d-c) )) / 2 )
-            """
-        )
-
-    input_PTNstim = Neuron(
-            equations = """ r = """ + stringified_stimuli_PTN2 ,
-            functions = """ 
-                g(a,b,c,d) = ((b/c)*a + abs(b/c*a)) / 2  - (b/c*(a-c) + abs( b/c*(a-c) )) / 2 - ( ((b/c)*d + abs(b/c*d)) / 2  - (b/c*(d-c) + abs( b/c*(d-c) )) / 2 )
-            """
-        )
-
-    input_CmPf = Neuron(
-            equations = """ r = """ + stringified_stimuli_CmPf ,
-            functions = """ 
-                g(a,b,c,d) = ((b/c)*a + abs(b/c*a)) / 2  - (b/c*(a-c) + abs( b/c*(a-c) )) / 2 - ( ((b/c)*d + abs(b/c*d)) / 2  - (b/c*(d-c) + abs( b/c*(d-c) )) / 2 )
-            """
-        )
-
+ 
 
 
     # NEURONES TYPES DU MODELE
@@ -236,17 +190,24 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
     )
 
     
-
-
-
     # DEFINITION DES POPULATIONS 
 
+
+
+    laps = 30
+    stimuli_CSN1 = [[2,time*5,0,laps],[5,time*4,time*5,laps],[10,time*3,time*9,laps],[15,time*2,time*12,laps],[20,time*1,time*14,laps]]
+    stimuli_CSN2 = [[2,time*1,0,laps],[5,time*1,time,laps],[10,time*1,time*2,laps],[15,time*1,time*3,laps],[20,time*1,time*4,laps],    [5,time*1,time*5,laps],[10,time*1,time*6,laps],[15,time*1,time*7,laps],[20,time*1,time*8,laps],    [10,time*1,time*9,laps],[15,time*1,time*10,laps],[20,time*1,time*11,laps],    [15,time*1,time*12,20],[20,time*1,time*13,laps],    [20,time*1,time*14,laps]  ]
+    
+    stimuli_PTN1= [[15,time*5,0,laps],[23,time*4,time*5,laps],[30,time*3,time*9,laps],[38,time*2,time*12,laps],[45,time*1,time*14,laps]]
+    
+    stimuli_PTN2= [[15,time*1,0,laps],[23,time*1,time*1,laps],[30,time*1,time*2,laps],[38,time*1,time*3,laps],[45,time*1,time*4,laps],     [23,time*1,time*5,laps],[30,time*1,time*6,laps],[38,time*1,time*7,laps],[45,time*1,time*8,laps],    [30,time*1,time*9,laps],[38,time*1,time*10,laps],[45,time*1,time*11,laps],     [38,time*1,time*12,20],[45,time*1,time*13,laps],     [45,time*1,time*14,laps]]
+    stimuli_CmPf = [[4,time*15,0,laps]]
     ### input ###    
-    CSN = Population(name='CSN', geometry=NbChannels-1, neuron = input_CSN )
-    PTN = Population(name='PTN', geometry=NbChannels-1, neuron = input_PTN )
-    CSNstim = Population(name='CSNstim', geometry=1, neuron = input_CSNstim )
-    PTNstim = Population(name='PTNstim', geometry=1, neuron = input_PTNstim )
-    CmPf = Population(name='CMPf', geometry=NbChannels, neuron = input_CmPf )
+    CSN = creation_TimedArray(15*time,NbChannels-1,stimuli,stimuli_CSN1)
+    PTN = creation_TimedArray(15*time,NbChannels-1,stimuli,stimuli_PTN1)
+    CSNstim = creation_TimedArray(15*time,1,stimuli,stimuli_CSN2)
+    PTNstim = creation_TimedArray(15*time,1,stimuli,stimuli_PTN2)
+    CmPf = creation_TimedArray(15*time,NbChannels,stimuli,stimuli_CmPf)
     ### BG ###
     FSI = Population(name='FSI', geometry=NbChannels, neuron=LeakyIntegratorNeuron_FSI)
     MSN = Population(name='MSN', geometry=NbChannels, neuron=LeakyIntegratorNeuron_MSN)
@@ -382,19 +343,19 @@ def creation_model(Tau_MSN = 5, Tau_FSI = 5, Tau_STN = 5, Tau_GPe = 5, Tau_GPiSN
     #   return( mean(r))
 
     ##### traitement des données simulées et affichage ####
-    # rCSN = mCSN.get('r')
-    # rCSNstim = mCSNstim.get('r')
-    # rPTN = mPTN.get('r')
-    # rPTNstim = mPTNstim.get('r')
-    # rCmPf = mCmPf.get('r')
-    # f,axs = plt.subplots(nrows=3 , ncols= 2 , sharey='row')
-    # axs[0,0].plot(dt()*np.arange(all_time*(1/Dt)), rCSN)
-    # axs[0,1].plot(dt()*np.arange(all_time*(1/Dt)), rCSNstim)
-    # axs[1,0].plot(dt()*np.arange(all_time*(1/Dt)), rPTN) 
-    # axs[1,1].plot(dt()*np.arange(all_time*(1/Dt)), rPTNstim)
-    # axs[2,0].plot(dt()*np.arange(all_time*(1/Dt)), rCmPf)
-    # axs[2,1].plot(dt()*np.arange(all_time*(1/Dt)), rCmPf)
-    # plt.show()
+    rCSN = mCSN.get('r')
+    rCSNstim = mCSNstim.get('r')
+    rPTN = mPTN.get('r')
+    rPTNstim = mPTNstim.get('r')
+    rCmPf = mCmPf.get('r')
+    f,axs = plt.subplots(nrows=3 , ncols= 2 , sharey='row')
+    axs[0,0].plot(dt()*np.arange(all_time*(1/Dt)), rCSN)
+    axs[0,1].plot(dt()*np.arange(all_time*(1/Dt)), rCSNstim)
+    axs[1,0].plot(dt()*np.arange(all_time*(1/Dt)), rPTN) 
+    axs[1,1].plot(dt()*np.arange(all_time*(1/Dt)), rPTNstim)
+    axs[2,0].plot(dt()*np.arange(all_time*(1/Dt)), rCmPf)
+    axs[2,1].plot(dt()*np.arange(all_time*(1/Dt)), rCmPf)
+    plt.show()
 
 
     rGPi = view_all_firing_rate(NbChannels, MSNmonitors, STNmonitors,FSImonitors,GPemonitors,GPiSNrmonitors, all_time, projection_test = projection_test, Shapley_test= Shapley_test, Dt = Dt, test_variation_tau = test_variation_tau, Tau_MSN = Tau_MSN, Tau_FSI = Tau_FSI, Tau_STN = Tau_STN, Tau_GPe = Tau_GPe, Tau_GPiSNr = Tau_GPiSNr )
@@ -437,14 +398,32 @@ def view_all_firing_rate( NbChannels, MSNmonitors, STNmonitors,FSImonitors,GPemo
 
 
 ##################################  Fonctions pour creer les inputs  #####################################
-def create_seq_stimuli(stimuli):
-        stringified_stimuli = ""
-        for stimulus in stimuli :
-            stringified_stimulus = "g(t-" + str(stimulus[2]) + "," + str(stimulus[0]) +","+ str(stimulus[3]) + ",t-" + str(stimulus[1]) + "-" + str(stimulus[2]) + "+" + str(stimulus[3]) + ")"
-            stringified_stimuli = stringified_stimuli + "+" + stringified_stimulus
-        return stringified_stimuli
+def creation_TimedArray(time,NbCanaux,funct,stimuli):  #*args
+    time = int(time)
+    inputs = np.zeros((int(time),NbCanaux))
+    X = linspace(0,time,time)
+    Y = [funct(X[i],stimuli) for i in range(time)]
+    for j in range(NbCanaux):
+        for i in range(time):
+            inputs[i][j] = Y[i]
+    inp = TimedArray(rates=inputs) 
+    return (inp)
 
+#stimulus est défini par son intensite puis sa duree puis son Temps initial puis le laps de temps qu'il faut pour arriver son maximum 
+def f(t,a):
+    return (a*t + abs(a*t)) / 2 
 
+def g(t,pente,laps):
+    return  f(t,pente/laps) - f(t-laps,pente/laps) 
+
+def stimulus(t,intensite,Duree,Ti,laps):
+    return g(t-Ti,intensite,laps) - g(t-Duree-Ti+laps,intensite,laps)
+
+def stimuli(t,L):
+    exc = 0
+    for stim in L:
+        exc += sum(stimulus(t,stim[0],stim[1],stim[2],stim[3]))
+    return exc
 
 
 ##################################     Test preliminaires       ############################################## 
@@ -472,8 +451,7 @@ def test_variation_tau():
 
 
 if __name__ == '__main__':
-    for i in [5,10,20,30,50]:
-        creation_model(utilisation_inputer = True, NbChannels = 3,Tau_MSN = 5, Tau_FSI = 5, Tau_STN = i, Tau_GPe = 5, Tau_GPiSNr = 5 )
+    creation_model(utilisation_inputer = True, NbChannels = 3,Tau_MSN = 30, Tau_FSI = 30, Tau_STN = 5, Tau_GPe = 30, Tau_GPiSNr = 30 )
 
     #val_proj_eff, val_proj_dist = Shapley_test()
     #np.save('log/test_Shapley/results_eff', val_proj_eff)
